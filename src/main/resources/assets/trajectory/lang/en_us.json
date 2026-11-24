@@ -1,0 +1,9 @@
+{
+  "itemGroup.trajectory": "CBC: Trajectory",
+  "item.trajectory.steel_ingot": "Steel Ingot",
+
+  "trajectory.configuration.title": "CBC: Trajectory Configs",
+  "trajectory.configuration.section.trajectory.common.toml": "CBC: Trajectory Configs",
+  "trajectory.configuration.section.trajectory.common.toml.title": "CBC: Trajectory Configs",
+  "trajectory.configuration.debugLogging": "Debug Logging"
+}

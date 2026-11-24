@@ -1,4 +1,4 @@
-package com.dryf34r.steelnest;
+package com.dryf34r.trajectory;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
