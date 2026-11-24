@@ -1,6 +1,20 @@
 {
   "itemGroup.trajectory": "CBC: Trajectory",
-  "item.trajectory.steel_ingot": "Steel Ingot",
+
+  "item.trajectory.rangefinder": "Rangefinder",
+  "item.trajectory.rangefinder.distance": "%s m  →  %s, %s, %s",
+  "item.trajectory.rangefinder.no_target": "No target in range",
+  "item.trajectory.rangefinder.no_notebook": "No spotter notebook in inventory",
+  "item.trajectory.rangefinder.recorded": "Recorded target %s, %s, %s",
+
+  "item.trajectory.spotter_notebook": "Spotter Notebook",
+
+  "block.trajectory.calculation_table": "Calculation Table",
+  "block.trajectory.calculation_table.linked": "Linked to cannon mount at %s, %s, %s",
+  "block.trajectory.calculation_table.linked_to": "Cannon mount: %s, %s, %s",
+  "block.trajectory.calculation_table.not_linked": "Not linked to a cannon mount (sneak + right-click a mount with the table item)",
+  "block.trajectory.calculation_table.no_measurement": "The notebook has no measurements",
+  "block.trajectory.calculation_table.target": "Target %s, %s, %s for mount %s, %s, %s (solution coming soon)",
 
   "trajectory.configuration.title": "CBC: Trajectory Configs",
   "trajectory.configuration.section.trajectory.common.toml": "CBC: Trajectory Configs",
