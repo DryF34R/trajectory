@@ -161,7 +161,7 @@ Açılar `FireSolver` ile hesaplandı, Sequenced Gearshift'e `açı × 8` (en ya
 | A2 | 4 | zemin z=150 | 54.625° | 150 | 151 | 150 de kırıldı |
 | B1 | 6 | zemin z=250 | 14.5° | 250 | 253 | |
 | B2 | 6 | zemin z=250 | 57.75° | 250 | 252 | |
-| C1 | 4 | platform z=120 | 18.125° | 120 | 118 | platform yüzeyi y=−49 ise model 117 der (y kontrol edilecek) |
+| C1 | 4 | platform z=120 | 18.125° | 117* | 118 | *platform blokları y=−50'deydi (yüzey −49), model buna göre 117 |
 
 Yorum: A1'deki varlık isabeti, ilk temasın tam modelin öngördüğü noktada olduğunu gösteriyor.
 Zemindeki fazlalık (+1…+3) uçuş hatası değil, çarpma sonrası: solid shot yumuşak bloklara (çim,
