@@ -27,7 +27,18 @@ sourceSets.main.resources {
 }
 
 repositories {
-    // Add here additional repositories if required by some of the dependencies below.
+    // Create, Create Big Cannons and Ritchie's Projectile Library are pulled from Modrinth's maven.
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 base {
@@ -116,6 +127,11 @@ configurations {
 }
 
 dependencies {
+    // Required mods. CBC depends on Create and Ritchie's Projectile Library.
+    implementation "maven.modrinth:create:${create_version}"
+    implementation "maven.modrinth:create-big-cannons:${cbc_version}"
+    implementation "maven.modrinth:rpl:${rpl_version}"
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
