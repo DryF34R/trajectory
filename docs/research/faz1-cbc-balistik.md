@@ -150,6 +150,24 @@ Model tüm atışlarda ±1 blok içinde tutuyor; x her atışta −2 (bu kurulum
 +1 farkı muhtemelen merminin zemine çarptıktan sonra gömülmesi/çarpışma taramasının `v + a` ile
 yapılması. En uzun menzil ~30–35° civarında (sürükleme 45°'yi kısaltıyor).
 
+### Çözücü doğrulaması (FireSolver, ters yön)
+
+Açılar `FireSolver` ile hesaplandı, Sequenced Gearshift'e `açı × 8` (en yakın tam sayı) girildi.
+3 barutlu atışlar için config'de top arızası kapatıldı (çelik topun güvenli sınırı 2 barut).
+
+| Test | Hız | Hedef | Açı | Beklenen z | Ölçülen z | Not |
+|---|---|---|---|---|---|---|
+| A1 | 4 | zemin z=150 | 19.625° | 150 | 150 | z=150'deki oyuncuya doğrudan isabet, sonra sekip 152'ye |
+| A2 | 4 | zemin z=150 | 54.625° | 150 | 151 | 150 de kırıldı |
+| B1 | 6 | zemin z=250 | 14.5° | 250 | 253 | |
+| B2 | 6 | zemin z=250 | 57.75° | 250 | 252 | |
+| C1 | 4 | platform z=120 | 18.125° | 120 | 118 | platform yüzeyi y=−49 ise model 117 der (y kontrol edilecek) |
+
+Yorum: A1'deki varlık isabeti, ilk temasın tam modelin öngördüğü noktada olduğunu gösteriyor.
+Zemindeki fazlalık (+1…+3) uçuş hatası değil, çarpma sonrası: solid shot yumuşak bloklara (çim,
+toprak) girip ilerliyor ya da sekiyor (`clipAndDamage` → `nextVelocity`). Hız arttıkça ve
+açı yataylaştıkça fark büyüyor (B1 > B2 > A). Atış çözümü için ilk temas noktası esas alınmalı.
+
 ## Açık sorular (oyun içi doğrulama)
 
 1. ~~Görünen pitch ile gerçek yükseliş aynı işaretli mi?~~ Evet: oyunda gösterilen pitch topun
