@@ -9,7 +9,7 @@ class FireSolverTest {
 
     private static final Ballistics B = Ballistics.BIG_CANNON_OVERWORLD;
     private static final double SPEED = 4.0;
-    private static final double LAUNCH_OFFSET = 5.0;
+    private static final double LAUNCH_OFFSET = 6.0;
     private static final double TARGET_HEIGHT = -2.5;
 
     @Test

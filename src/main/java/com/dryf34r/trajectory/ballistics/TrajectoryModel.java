@@ -26,13 +26,15 @@ public final class TrajectoryModel {
 
     /**
      * Distance from the pivot centre to where CBC spawns the projectile, along the barrel.
-     * CBC spawns it at the centre of the block past the muzzle, minus 2 blocks.
+     * CBC's firing loop stops on the first non-cannon block past the muzzle, spawns the projectile
+     * at the centre of the block after that, then pulls it back 2 blocks: net result is the muzzle
+     * block's own centre (MountedBigCannonContraption.fireShot).
      *
      * @param muzzleOffset how many blocks the last barrel block is in front of the pivot block
      *                     (e.g. pivot at z=-9, muzzle at z=-3 gives 6)
      */
     public static double launchOffset(int muzzleOffset) {
-        return muzzleOffset + 1 - 2;
+        return muzzleOffset;
     }
 
     /**

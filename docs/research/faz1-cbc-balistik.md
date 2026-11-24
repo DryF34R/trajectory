@@ -98,7 +98,9 @@ Config'den (`CBCConfigs.server()`) gelenler fiziği değil, yan davranışları 
   (her eksen için ayrı, `random.triangle` yani ±`0.0172275 × spread` aralığında üçgen dağılım;
   NeoForge 21.1.265 kaynağında `Projectile.getMovementToShoot` ile doğrulandı). Gürültü
   normalize'dan *sonra* eklendiği için hız büyüklüğü de hafifçe değişiyor.
-- **Çıkış noktası:** son namlu bloğunun bir ötesinin merkezi, eksi `2 × dir`.
+- **Çıkış noktası:** döngü namludan sonraki ilk top-dışı blokta (`currentPos`) duruyor, mermi
+  `currentPos.relative(dir)` merkezinde oluşturulup `2 × dir` geri çekiliyor. Net sonuç: **son namlu
+  bloğunun kendi merkezi** (ilk sürümde yanlışlıkla bir blok geride hesaplanmıştı, düzeltildi).
 - **Yön:** `dir = normalize(spawnPos − contraption merkezi)`, yani doğrudan topun dönüşünden
   (yaw/pitch) türetiliyor.
 - Şüpheli satır (472 civarı): `if (chargesUsed < minimumSpread) chargesUsed = minimumSpread;`
@@ -134,39 +136,40 @@ yükseliş açısı için en temiz yol contraption entity'nin gerçek namlu yön
 Kurulum: superflat (zemin üstü y = −60), çelik top: 3 cannon chamber + 4 barrel + quick-firing breech,
 2 powder charge + solid shot (namlu hızı 4 blok/tick), hep güneye (+z). Mount (−2, −60, −9).
 Top mount'un 2 üstünde kuruluyor (`assemblyPos = mount.relative(vertical, −2)`), dönüş merkezi blok
-(−2, −58, −9), namlu ucu (−2, −58, −3). Çıkış noktası = merkez + 5 × yön.
+(−2, −58, −9), namlu ucu (−2, −58, −3). Çıkış noktası = merkez + 6 × yön (namlu ucu bloğunun merkezi).
 
 Model: yukarıdaki tick denklemleri, gravity −0.05, drag 0.01, düşüş = y'nin −60'ı geçtiği an.
 
 | Açı | Ölçülen z | Model z (blok) | Fark | Uçuş (tick) |
 |---|---|---|---|---|
-| 0° | 36 | 35 | +1 | 11 |
-| 15° | 131 | 130 | +1 | 43 |
-| 30° | 177 | 177 | 0 | 75 |
-| 45° | 173 | 173 | 0 | 100 |
-| 60° | 133 | 132 | +1 | 119 |
+| 0° | 36 | 36 | 0 | 11 |
+| 15° | 131 | 131 | 0 | 43 |
+| 30° | 177 | 178 | −1 | 75 |
+| 45° | 173 | 174 | −1 | 100 |
+| 60° | 133 | 133 | 0 | 119 |
 
-Model tüm atışlarda ±1 blok içinde tutuyor; x her atışta −2 (bu kurulumda saçılma ihmal edilebilir).
-+1 farkı muhtemelen merminin zemine çarptıktan sonra gömülmesi/çarpışma taramasının `v + a` ile
-yapılması. En uzun menzil ~30–35° civarında (sürükleme 45°'yi kısaltıyor).
+Model tüm atışlarda ±1 blok içinde, sistematik kayma yok; x her atışta −2 (bu kurulumda saçılma
+ihmal edilebilir). İlk hesapta çıkış noktası 5 alınmıştı ve atışlar hep +1 kayık çıkıyordu; kaynak
+kod tekrar okununca doğru değerin 6 olduğu anlaşıldı. En uzun menzil ~30–35° civarında (sürükleme
+45°'yi kısaltıyor).
 
 ### Çözücü doğrulaması (FireSolver, ters yön)
 
 Açılar `FireSolver` ile hesaplandı, Sequenced Gearshift'e `açı × 8` (en yakın tam sayı) girildi.
 3 barutlu atışlar için config'de top arızası kapatıldı (çelik topun güvenli sınırı 2 barut).
 
-| Test | Hız | Hedef | Açı | Beklenen z | Ölçülen z | Not |
-|---|---|---|---|---|---|---|
-| A1 | 4 | zemin z=150 | 19.625° | 150 | 150 | z=150'deki oyuncuya doğrudan isabet, sonra sekip 152'ye |
-| A2 | 4 | zemin z=150 | 54.625° | 150 | 151 | 150 de kırıldı |
-| B1 | 6 | zemin z=250 | 14.5° | 250 | 253 | |
-| B2 | 6 | zemin z=250 | 57.75° | 250 | 252 | |
-| C1 | 4 | platform z=120 | 18.125° | 117* | 118 | *platform blokları y=−50'deydi (yüzey −49), model buna göre 117 |
+| Test | Hız | Hedef | Açı | Hedeflenen z | Düzeltilmiş model z | Ölçülen z | Not |
+|---|---|---|---|---|---|---|---|
+| A1 | 4 | zemin z=150 | 19.625° | 150 | 152 | 152 | z=150'deki oyuncuya çarptı, zemine 152'de değip sekti |
+| A2 | 4 | zemin z=150 | 54.625° | 150 | 151 | 151 | 150 de kırıldı |
+| B1 | 6 | zemin z=250 | 14.5° | 250 | 252 | 253 | |
+| B2 | 6 | zemin z=250 | 57.75° | 250 | 251 | 252 | |
+| C1 | 4 | platform z=120 | 18.125° | 120 | 119* | 118 | *platform yüzeyi y=−49 (bloklar −50) |
 
-Yorum: A1'deki varlık isabeti, ilk temasın tam modelin öngördüğü noktada olduğunu gösteriyor.
-Zemindeki fazlalık (+1…+3) uçuş hatası değil, çarpma sonrası: solid shot yumuşak bloklara (çim,
-toprak) girip ilerliyor ya da sekiyor (`clipAndDamage` → `nextVelocity`). Hız arttıkça ve
-açı yataylaştıkça fark büyüyor (B1 > B2 > A). Atış çözümü için ilk temas noktası esas alınmalı.
+Yorum: açılar eski (5 bloklu) çıkış noktasıyla hesaplandığı için atışlar hedefin 1–2 blok ötesine
+düştü. Düzeltilmiş modelle 10 atışın hepsi ±1 blok içinde ve ortalama hata ~0. İlk yorumdaki
+"zemindeki +1…+3 fazlalık = merminin gömülmesi" açıklaması yanlıştı; fark çıkış noktası
+hatasından geliyordu. Düzeltmeden sonra çözücü aynı hedeflere tam isabet etmeli.
 
 ## Açık sorular (oyun içi doğrulama)
 
