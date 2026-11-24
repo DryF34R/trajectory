@@ -151,6 +151,7 @@ yapılması. En uzun menzil ~30–35° civarında (sürükleme 45°'yi kısaltı
 
 ## Açık sorular (oyun içi doğrulama)
 
-1. Mount'ta görünen/Display Link'teki pitch değeri ile gerçek yükseliş açısı aynı işaretli mi?
-   (Sequenced Gearshift'te yön girişin dönüş yönüne göre forward/reverse ayarlanmalı.)
+1. ~~Görünen pitch ile gerçek yükseliş aynı işaretli mi?~~ Evet: oyunda gösterilen pitch topun
+   yönünden bağımsız, yukarı bakınca pozitif, aşağı bakınca negatif (kodda `getDisplayPitch` işareti
+   düzeltiyor). Sequenced Gearshift'te yön, girişin dönüş yönüne göre forward/reverse seçilmeli.
 2. ~~Model gerçek atışla tutuyor mu?~~ Evet, yukarıdaki tablo.
