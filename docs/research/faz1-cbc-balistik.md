@@ -128,7 +128,29 @@ Config'den (`CBCConfigs.server()`) gelenler fiziği değil, yan davranışları 
 yükseliş açısı için en temiz yol contraption entity'nin gerçek namlu yönünü
 (`toGlobalVector` ile) hesaplamak. Böylece `sgn` belirsizliği ortadan kalkar.
 
+## Oyun içi ölçüm (2026-11-24)
+
+Kurulum: superflat (zemin üstü y = −60), çelik top: 3 cannon chamber + 4 barrel + quick-firing breech,
+2 powder charge + solid shot (namlu hızı 4 blok/tick), hep güneye (+z). Mount (−2, −60, −9).
+Top mount'un 2 üstünde kuruluyor (`assemblyPos = mount.relative(vertical, −2)`), dönüş merkezi blok
+(−2, −58, −9), namlu ucu (−2, −58, −3). Çıkış noktası = merkez + 5 × yön.
+
+Model: yukarıdaki tick denklemleri, gravity −0.05, drag 0.01, düşüş = y'nin −60'ı geçtiği an.
+
+| Açı | Ölçülen z | Model z (blok) | Fark | Uçuş (tick) |
+|---|---|---|---|---|
+| 0° | 36 | 35 | +1 | 11 |
+| 15° | 131 | 130 | +1 | 43 |
+| 30° | 177 | 177 | 0 | 75 |
+| 45° | 173 | 173 | 0 | 100 |
+| 60° | 133 | 132 | +1 | 119 |
+
+Model tüm atışlarda ±1 blok içinde tutuyor; x her atışta −2 (bu kurulumda saçılma ihmal edilebilir).
++1 farkı muhtemelen merminin zemine çarptıktan sonra gömülmesi/çarpışma taramasının `v + a` ile
+yapılması. En uzun menzil ~30–35° civarında (sürükleme 45°'yi kısaltıyor).
+
 ## Açık sorular (oyun içi doğrulama)
 
 1. Mount'ta görünen/Display Link'teki pitch değeri ile gerçek yükseliş açısı aynı işaretli mi?
-2. Yukarıdaki model gerçek atışla birebir tutuyor mu? (Faz 2 karşılaştırması için ölçüm verisi)
+   (Sequenced Gearshift'te yön girişin dönüş yönüne göre forward/reverse ayarlanmalı.)
+2. ~~Model gerçek atışla tutuyor mu?~~ Evet, yukarıdaki tablo.
