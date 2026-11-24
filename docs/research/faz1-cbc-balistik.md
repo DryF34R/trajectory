@@ -115,6 +115,11 @@ Config'den (`CBCConfigs.server()`) gelenler fiziği değil, yan davranışları 
   yazar. **İşaret tuzağı:** topun ilk yönüne göre `sgn = ±1` çarpanı var (satır 144–146, 189–191),
   yani `cannonPitch` ile gerçek yükseliş açısı arasındaki işaret topun baktığı yöne bağlı.
 - Sequenced Gearshift ile tam açı: `yaw/pitchInterface.getSequencedAngleLimit()` (satır 151–161).
+  **Mount'ta dahili 8:1 redüksiyon var:** hem dönüş hızı (`getAngularSpeed`, satır 317:
+  `convertToAngular(rpm) × 0.125`) hem sıralı açı limiti (`CannonMountInterfaceBlockEntity`
+  satır 48: `getEffectiveValue(...) × 0.125`) 1/8 ile çarpılıyor. Gearshift'e 160° girilirse
+  top 20° döner. Create'in `getEffectiveValue`'su aradaki dişli oranını hesaba kattığı için
+  gearshift ile mount arasına 1:8 hızlandırma koymak da aynı sonucu verir.
 - Açıyı dışarı veren hazır yer: `getDisplayPitch()` ve `CannonMountDisplaySource` (Display Link).
 - Taşınabilir top: `cannon_control/carriage/CannonCarriageEntity`, sabit mount:
   `cannon_control/fixed_cannon_mount`. Faz 3'te bunlar da hesaba katılmalı.
