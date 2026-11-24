@@ -113,7 +113,8 @@ Config'den (`CBCConfigs.server()`) gelenler fiziği değil, yan davranışları 
   (satır 163–166).
 - `applyRotation` (satır 183) değerleri `PitchOrientedContraptionEntity`'ye (`mountedContraption.pitch/yaw`)
   yazar. **İşaret tuzağı:** topun ilk yönüne göre `sgn = ±1` çarpanı var (satır 144–146, 189–191),
-  yani `cannonPitch` ile gerçek yükseliş açısı arasındaki işaret topun baktığı yöne bağlı.
+  ama bu çarpan yalnızca *giriş dönüş yönünü* etkiliyor (`cannonPitch += pitchSpeed × sgn`). `cannonPitch` kendisi
+  yönden bağımsız gerçek yükseliş açısı (oyunda doğrulandı), dolayısıyla doğrudan kullanılabilir.
 - Sequenced Gearshift ile tam açı: `yaw/pitchInterface.getSequencedAngleLimit()` (satır 151–161).
   **Mount'ta dahili 8:1 redüksiyon var:** hem dönüş hızı (`getAngularSpeed`, satır 317:
   `convertToAngular(rpm) × 0.125`) hem sıralı açı limiti (`CannonMountInterfaceBlockEntity`
@@ -152,6 +153,6 @@ yapılması. En uzun menzil ~30–35° civarında (sürükleme 45°'yi kısaltı
 ## Açık sorular (oyun içi doğrulama)
 
 1. ~~Görünen pitch ile gerçek yükseliş aynı işaretli mi?~~ Evet: oyunda gösterilen pitch topun
-   yönünden bağımsız, yukarı bakınca pozitif, aşağı bakınca negatif (kodda `getDisplayPitch` işareti
-   düzeltiyor). Sequenced Gearshift'te yön, girişin dönüş yönüne göre forward/reverse seçilmeli.
+   yönünden bağımsız, yukarı bakınca pozitif, aşağı bakınca negatif (`getDisplayPitch` doğrudan `cannonPitch` döndürüyor;
+   bu değer yönden bağımsız). Sequenced Gearshift'te yön, girişin dönüş yönüne göre forward/reverse seçilmeli.
 2. ~~Model gerçek atışla tutuyor mu?~~ Evet, yukarıdaki tablo.
