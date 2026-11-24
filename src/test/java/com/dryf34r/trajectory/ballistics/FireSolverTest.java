@@ -3,11 +3,8 @@ package com.dryf34r.trajectory.ballistics;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-// Remove @Disabled once FireSolver.solve is implemented.
-@Disabled("FireSolver.solve not implemented yet")
 class FireSolverTest {
 
     private static final Ballistics B = Ballistics.BIG_CANNON_OVERWORLD;
